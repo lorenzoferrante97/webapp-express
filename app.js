@@ -3,4 +3,8 @@ import express from 'express';
 const app = express();
 const port = process.env.SERVER_PORT;
 
+import router from './routers/movieRouter.js';
+
+app.use('/books', router);
+
 app.listen(port, () => console.log(`Server active on port ${port}`));
