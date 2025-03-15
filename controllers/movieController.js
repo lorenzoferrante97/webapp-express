@@ -5,7 +5,15 @@ function index(req, res) {
 
   const queryResult = (err, results) => {
     if (err) res.status(500), json({ error: 'Server error -> Index function' });
-    else return res.json(results);
+    else {
+      const movies = results.map((movie) => {
+        return {
+          ...movie,
+          imagePath: `${req.imagePath}${movie.image}`,
+        };
+      });
+      return res.json(movies);
+    }
   };
 
   connection.query(sql, (err, results) => queryResult(err, results));
@@ -39,6 +47,8 @@ function show(req, res) {
 
   connection.query(sql, [id], (err, results) => {
     const movie = getMovie(err, results);
+
+    movie.imagePath = `${req.imagePath}${movie.image}`;
 
     connection.query(reviewsSql, [id], (err, reviewsResult) => {
       const reviews = getReviews(err, reviewsResult);
