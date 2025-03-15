@@ -26,7 +26,7 @@ function show(req, res) {
     if (err) {
       const error = serverError();
       json(error);
-    } else if (results.length === 0) res.status(404), json({ 'error code': 404, error: 'Movie Not Found' });
+    } else if (results.length === 0) res.status(404), res.json({ 'error code': 404, error: 'Movie Not Found' });
     else return results[0];
   };
 
@@ -43,7 +43,7 @@ function show(req, res) {
     connection.query(reviewsSql, [id], (err, reviewsResult) => {
       const reviews = getReviews(err, reviewsResult);
       movie.reviews = reviews;
-      json(movie);
+      res.json(movie);
     });
   });
 }
