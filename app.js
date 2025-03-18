@@ -11,6 +11,6 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(imgPathMw);
 
-app.use('/books', router);
+app.use('/movies', router);
 
 app.listen(port, () => console.log(`Server active on port ${port}`));
