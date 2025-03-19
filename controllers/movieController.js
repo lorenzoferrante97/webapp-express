@@ -60,6 +60,9 @@ function show(req, res) {
 
 function storeReview(req, res) {
   const { id } = req.params;
+  const { name, vote, text } = req.body;
+
+  const sql = 'INSERT INTO reviews ( text, name, vote, book_id ) VALUES (?,?,?,?)';
 }
 
 export { index, show };
