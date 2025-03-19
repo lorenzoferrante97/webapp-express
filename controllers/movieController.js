@@ -59,17 +59,17 @@ function show(req, res) {
 }
 
 function storeReview(req, res) {
-  const { id } = req.params;
+  const id = req.params.id;
   const { name, vote, text } = req.body;
 
-  const sql = 'INSERT INTO reviews ( text, name, vote, book_id ) VALUES (?,?,?,?)';
+  const sql = 'INSERT INTO reviews ( movie_id, name, vote, text ) VALUES (?,?,?,?)';
 
-  const queryResult = (err) => {
+  const queryResult = (err, results) => {
     if (err) res.status(500).json({ error: 'Server Error -> Store Review Function' });
-    else res.status(201).json({ message: 'Review inserted correctly' });
+    else res.status(201).json({ message: 'Review added correctly' });
   };
 
-  connection.query(sql, [name, vote, text, id], (err) => queryResult(err));
+  connection.query(sql, [id, name, vote, text], (err, results) => queryResult(err, results));
 }
 
-export { index, show };
+export { index, show, storeReview };
