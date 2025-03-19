@@ -63,6 +63,13 @@ function storeReview(req, res) {
   const { name, vote, text } = req.body;
 
   const sql = 'INSERT INTO reviews ( text, name, vote, book_id ) VALUES (?,?,?,?)';
+
+  const queryResult = (err) => {
+    if (err) res.status(500).json({ error: 'Server Error -> Store Review Function' });
+    else res.status(201).json({ message: 'Review inserted correctly' });
+  };
+
+  connection.query(sql, [name, vote, text, id], (err) => queryResult(err));
 }
 
 export { index, show };
