@@ -23,7 +23,7 @@ function show(req, res) {
   const id = req.params.id;
 
   const sql = 'SELECT * FROM movies WHERE id = ?';
-  const reviewsSql = 'SELECT * FROM reviews WHERE movie_id = ?';
+  const reviewsSql = 'SELECT * FROM reviews WHERE movie_id = ? ORDER BY updated_at DESC';
 
   const serverError = () => {
     res.status(500);
