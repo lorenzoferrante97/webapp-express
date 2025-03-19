@@ -58,4 +58,8 @@ function show(req, res) {
   });
 }
 
+function storeReview(req, res) {
+  const { id } = req.params;
+}
+
 export { index, show };
