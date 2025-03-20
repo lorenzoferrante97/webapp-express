@@ -22,7 +22,12 @@ function index(req, res) {
 function show(req, res) {
   const id = req.params.id;
 
-  const sql = 'SELECT * FROM movies WHERE id = ?';
+  // const sql = 'SELECT * FROM movies WHERE id = ?';
+  const sql = `
+  SELECT movies.*, ROUND(AVG(reviews.vote)) AS average_vote
+  FROM movies
+  LEFT JOIN reviews ON movie_id = movies.id
+  WHERE movies.id = ?`;
   const reviewsSql = 'SELECT * FROM reviews WHERE movie_id = ? ORDER BY updated_at DESC';
 
   const serverError = () => {
@@ -53,6 +58,7 @@ function show(req, res) {
     connection.query(reviewsSql, [id], (err, reviewsResult) => {
       const reviews = getReviews(err, reviewsResult);
       movie.reviews = reviews;
+      movie.average_vote = parseInt(movie.average_vote);
       res.json(movie);
     });
   });
